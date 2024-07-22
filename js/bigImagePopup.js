@@ -47,11 +47,11 @@ const generatePopup = function (thumbnail) {
 };
 
 
-
 const renderComments = () => {
 
   const commentFragment = document.createDocumentFragment();
   commentsList.innerHTML = '';
+  commentTemplate.cloneNode(true);
 
   commentsList.appendChild(commentFragment);
 };
