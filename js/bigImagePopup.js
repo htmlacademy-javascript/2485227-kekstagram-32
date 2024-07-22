@@ -1,11 +1,6 @@
-//найти кнопки и попап. навесить слушатели. по клику вешать и снимать класс hidden у .big-picture.
-// Адрес изображения url подставьте как src изображения внутри блока .big-picture__img.
+import {isEscapeKey} from './util.js';
+import {getPictures} from './data.js';
 
-// Количество лайков likes подставьте как текстовое содержание элемента .likes-count.
-
-// Количество показанных комментариев подставьте как текстовое содержание элемента .social__comment-shown-count.
-
-// Общее количество комментариев к фотографии comments подставьте как текстовое содержание элемента .social__comment-total-count.
 
 // Список комментариев под фотографией: комментарии должны вставляться в блок .social__comments. Разметка каждого комментария должна выглядеть так:
 
@@ -21,29 +16,85 @@
 //  <p class="social__text">{{текст комментария}}</p>
 //</li>
 
-// Описание фотографии description вставьте строкой в блок .social__caption.
+
 
 const bigPicturePopup = document.querySelector('.big-picture');
-const thumbnails = document.getElementsByClassName('picture');
-const bigPicture = document.querySelector('.big-picture__img');
-
-const likes = document.querySelector('.likes-count');
+const pictures = document.querySelector('.pictures');
+const thumbnails = pictures.getElementsByClassName('picture');
+const bigPictureImageContainer = document.querySelector('.big-picture__img');
+const bigPictureImage = bigPictureImageContainer.querySelector('img');
+const bigPictureLikes = document.querySelector('.likes-count');
 const commentsTotalCounter = document.querySelector('.social__comment-total-count');
 const commentsShownCounter = document.querySelector('.social__comment-shown-count');
+const bigPictureCloseButton = document.querySelector('.big-picture__cancel ');
+const bigPictureDescription = document.querySelector('.social__caption');
+const commentTemplate = document.querySelector('#comment-template').content.querySelector('.social__comment');
+const commentsList = document.querySelector('.social__comments');
 
 
-const openPopup = function(popup){
 
-  thumbnails.addEventListener('click', function (evt) {
-    popup = bigPicturePopup;
-    popup.classList.remove('hidden');
-  });
+
+const generatePopup = function (thumbnail) {
+  bigPictureImage.src = thumbnail.querySelector('.picture__img').src;
+  bigPictureLikes.textContent = thumbnail.querySelector('.picture__likes').textContent;
+  commentsTotalCounter.textContent = thumbnail.querySelector('.picture__comments').textContent;
+  commentsShownCounter.textContent = bigPicturePopup.querySelectorAll('.social__comment').length;
+
+  //renderComments(thumbnail);
+
+  bigPictureDescription.textContent = thumbnail.querySelector('.picture__img').alt;
 
 };
 
-openPopup();
 
-const closeBigPicture = function(){
+
+const renderComments = () => {
+
+  const commentFragment = document.createDocumentFragment();
+  commentsList.innerHTML = '';
+
+  commentsList.appendChild(commentFragment);
+};
+
+console.log(renderComments());
+
+
+const onDocumentKeydown = (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    closePopup();
+  }
+};
+
+//открывает попап
+const openPopup = function() {
+  for (let i = 0; i < thumbnails.length; i++) {
+    thumbnails[i].addEventListener('click', (evt) => {
+      evt.preventDefault();
+      generatePopup(thumbnails[i]);
+      bigPicturePopup.classList.remove('hidden');
+      document.body.classList.add('modal-open');
+      document.addEventListener('keydown', onDocumentKeydown);
+    });
+  }
+};
+
+
+//закрывает попап
+const closePopup = function() {
   bigPicturePopup.classList.add('hidden');
+  document.removeEventListener('keydown', onDocumentKeydown);
 };
 
+bigPictureCloseButton.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  closePopup();
+});
+
+const popupHandler = function () {
+  openPopup();
+  closePopup();
+};
+
+
+export {popupHandler};

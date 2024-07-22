@@ -22,7 +22,7 @@ const generateMiniatures = function (pictures) {
   pictures.forEach((picture) => {
     const miniature = createMiniature(picture);
     fragment.append(miniature);
-});
+  });
 
   miniaturesContainer.appendChild(fragment);
 };
