@@ -20,28 +20,36 @@ const commentsLoaderButton = document.querySelector('.social__comments-loader');
 const hideComments = function (maxShownComments) {
   if (comments.length > maxShownComments) {
     for (let i = maxShownComments; i < comments.length; i++) {
-      comments[i - 1].classList.add('hidden');
+      comments[i].classList.add('hidden');
     }
   }
-
 };
 
+
+let visibleComments = 0;
 const loadMoreComments = function () {
-  let visibleCount = 5;
-  for (let i = 0; i < maxShownComments && i < hiddenComments.length; i++) {
+
+  const remainingItems = Math.min(maxShownComments, hiddenComments.length);
+  for (let i = 0; i < remainingItems; i++) {
     hiddenComments[i].classList.remove('hidden');
+    visibleComments++;
+    commentsShownCounter.textContent = comments.length - hiddenComments.length;
   }
 
-  visibleCount += maxShownComments;
-  commentsShownCounter.textContent = comments.length - hiddenComments.length;
+  if (visibleComments >= comments.length) {
+    commentsLoaderButton.classList.add('hidden');
+  }
+
+
 };
 
 
-const showComments = function () {
-  commentsLoaderButton.addEventListener('click', () => {
-    loadMoreComments();
+const onLoadCommentsButton = () => {
+  loadMoreComments();
+};
 
-  });
+const showComments = function () {
+  commentsLoaderButton.addEventListener('click', onLoadCommentsButton);
 
 };
 
@@ -63,10 +71,14 @@ const renderComments = (picture) => {
   });
 
   commentsList.append(commentFragment);
+
   hideComments(maxShownComments);
   commentsTotalCounter.textContent = picture.comments.length;
   commentsShownCounter.textContent = comments.length - hiddenComments.length;
+  commentsLoaderButton.classList.toggle('hidden', picture.comments.length <= maxShownComments);
   showComments();
+
+
 };
 
 
@@ -108,7 +120,7 @@ const closePopup = () => {
     evt.preventDefault();
     closePopup();
   });
-
+  commentsLoaderButton.removeEventListener('click', onLoadCommentsButton);
   document.addEventListener('keydown', onDocumentKeydown);
 };
 
