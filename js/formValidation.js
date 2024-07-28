@@ -29,15 +29,11 @@ pristine.addValidator(hashtagsInput, validateHashtags, 'Хэштеги долж�
 pristine.addValidator(comments, validateComment, 'Комментарий не может содержать больше 140 символов');
 
 
-
-
 form.addEventListener('submit', (evt) => {
-  evt.preventDefault();
   const hashtagsCheck = pristine.validate();
-  if (hashtagsCheck && validateComment) {
-    console.log('Форма валидна!');
-  } else {
-    console.log('Форма невалидна!');
+
+  if (!(hashtagsCheck && validateComment)) {
+    evt.preventDefault();
   }
 
 });
@@ -48,12 +44,12 @@ function validateHashtags (value) {
   if (hashtags.length > 5) {
     return false;
   }
-  const lowerCaseTags = hashtags.map(tag => tag.toLowerCase());
+  const lowerCaseTags = hashtags.map((tag) => tag.toLowerCase());
   const uniqueTags = new Set(lowerCaseTags);
   if (uniqueTags.size !== hashtags.length) {
     return false;
   }
-  return hashtags.every(tag => hashtagRequirements.test(tag));
+  return hashtags.every((tag) => hashtagRequirements.test(tag));
 }
 
 function validateComment(value) {
