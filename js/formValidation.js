@@ -1,14 +1,6 @@
 import '../vendor/pristine/pristine.min.js';
 
-
-const body = document.body;
 const form = document.querySelector('.img-upload__form');
-const uploadImageInput = form.querySelector('.img-upload__input');
-const uploadImageOverlay = form.querySelector('.img-upload__overlay');
-const previewImageContainer = document.querySelector('.img-upload__preview');
-const previewImage = previewImageContainer.querySelector('img');
-const previewCloseButton = document.querySelector('.img-upload__cancel');
-const filterInputs = form.querySelectorAll('.effects__radio');
 const hashtagsInput = form.querySelector('.text__hashtags');
 const comments = form.querySelector('.text__description');
 
