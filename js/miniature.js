@@ -5,14 +5,14 @@ const miniaturesContainer = document.querySelector('.pictures');
 const createMiniature = function (picture) {
   const miniatureElement = miniatureTemplate.cloneNode(true);
 
-  let imageElement = miniatureElement.querySelector('.picture__img');
-  let imageCommentsNumber = miniatureElement.querySelector('.picture__comments');
-  let imageLikes = miniatureElement.querySelector('.picture__likes');
+  const imageElement = miniatureElement.querySelector('.picture__img');
+  const imageCommentsNumber = miniatureElement.querySelector('.picture__comments');
+  const imageLikes = miniatureElement.querySelector('.picture__likes');
 
-imageElement.src = picture.url;
-imageElement.alt = picture.description;
-imageCommentsNumber.textContent = picture.comments.length;
-imageLikes.textContent = picture.likes;
+  imageElement.src = picture.url;
+  imageElement.alt = picture.description;
+  imageCommentsNumber.textContent = picture.comments.length;
+  imageLikes.textContent = picture.likes;
 
   return miniatureElement;
 };
@@ -22,7 +22,7 @@ const generateMiniatures = function (pictures) {
   pictures.forEach((picture) => {
     const miniature = createMiniature(picture);
     fragment.append(miniature);
-});
+  });
 
   miniaturesContainer.appendChild(fragment);
 };

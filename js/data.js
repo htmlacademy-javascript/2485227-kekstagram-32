@@ -76,6 +76,7 @@ const NAMES = [
 
 
 const generateRandomId = createIdGenerator();
+
 const createMessage = () => Array.from(
   {length: getRandomInteger(MESSAGES_MIN_COUNT, MESSAGES_MAX_COUNT)},
   () => getRandomArrayElement(COMMENT_LINES)
