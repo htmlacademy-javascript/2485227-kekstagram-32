@@ -77,7 +77,6 @@ const renderComments = (picture) => {
 //открытие и закрытие
 
 
-
 const closePopup = () => {
   bigPicturePopup.classList.add('hidden');
   document.body.classList.remove('modal-open');
