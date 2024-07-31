@@ -6,32 +6,27 @@ const comments = form.querySelector('.text__description');
 
 const hashtagRequirements = /^#[a-zа-яё0-9]{1,19}$/i;
 
-//hashtags
+
 const pristine = new Pristine(form, {
-  classTo: 'form__item',
-  errorClass: 'form__item--invalid',
-  successClass: 'form__item--valid',
-  errorTextParent: 'form__item',
-  errorTextTag: 'span',
-  errorTextClass: 'form__error'
+  classTo: 'img-upload__field-wrapper',
+  errorTextParent: 'img-upload__field-wrapper',
+  errorTextClass: 'img-upload__field-wrapper__error',
 });
 
-pristine.addValidator(hashtagsInput, validateHashtags, 'Хэштеги должны начинаться с # и содержать от 1 до 20 символов');
 
+pristine.addValidator(hashtagsInput, validateHashtags, 'Хэштеги должны начинаться с # и содержать от 1 до 20 символов');
 pristine.addValidator(comments, validateComment, 'Комментарий не может содержать больше 140 символов');
 
 
 form.addEventListener('submit', (evt) => {
-  const hashtagsCheck = pristine.validate();
+  const isValid = pristine.validate();
 
-  if (!(hashtagsCheck && validateComment)) {
+  if (!isValid) {
     evt.preventDefault();
   }
-
 });
 
-
-function validateHashtags (value) {
+function validateHashtags(value) {
   const hashtags = value.trim().split(/\s+/);
   if (hashtags.length > 5) {
     return false;
