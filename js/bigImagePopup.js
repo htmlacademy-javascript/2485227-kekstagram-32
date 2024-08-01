@@ -8,7 +8,6 @@ const bigPictureImage = bigPictureImageContainer.querySelector('img');
 const bigPictureLikes = document.querySelector('.likes-count');
 const commentsTotalCounter = document.querySelector('.social__comment-total-count');
 const commentsShownCounter = document.querySelector('.social__comment-shown-count');
-
 const bigPictureCloseButton = document.querySelector('.big-picture__cancel');
 const bigPictureDescription = document.querySelector('.social__caption');
 const commentTemplate = document.querySelector('#comment-template').content.querySelector('.social__comment');
@@ -95,6 +94,7 @@ const openPopup = (picture) => {
   document.body.classList.add('modal-open');
   document.addEventListener('click', onClosePopupButton);
   document.addEventListener('keydown', onDocumentKeydown);
+
 };
 
 const onDocumentKeydown = (evt) => {

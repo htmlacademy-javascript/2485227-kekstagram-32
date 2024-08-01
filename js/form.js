@@ -1,5 +1,7 @@
 import { isEscapeKey } from './util.js';
 import './formValidation.js';
+import {removeScaleListeners} from './userImageScale.js';
+
 
 const body = document.body;
 const form = document.querySelector('.img-upload__form');
@@ -85,7 +87,7 @@ const closeUserImagePopup = function () {
   document.removeEventListener('keydown', onDocumentKeydown);
   comments.removeEventListener('keydown', onHashtagsFocus);
   comments.removeEventListener('keydown', onCommentsFocus);
-
+  removeScaleListeners();
 };
 
 
