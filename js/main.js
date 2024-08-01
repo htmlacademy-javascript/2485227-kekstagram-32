@@ -7,3 +7,5 @@ const pictures = getPictures();
 generateMiniatures(pictures);
 
 generatePopup(pictures);
+
+import './form.js';

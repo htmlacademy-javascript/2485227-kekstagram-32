@@ -17,6 +17,8 @@ const comments = commentsList.getElementsByClassName('social__comment');
 const hiddenComments = commentsList.getElementsByClassName('social__comment hidden');
 const commentsLoaderButton = document.querySelector('.social__comments-loader');
 
+
+//подгрузка комментариев
 const hideComments = function (maxShownComments) {
   if (comments.length > maxShownComments) {
     for (let i = maxShownComments; i < comments.length; i++) {
@@ -25,18 +27,15 @@ const hideComments = function (maxShownComments) {
   }
 };
 
-
-let visibleComments = 0;
+//после определенного количества кликов по кнопке происходит(TypeError: undefined is not an object (evaluating 'hiddenComments[i].classList')) и комментарии начинают подгружаться по 1-2-3 штуки
 const loadMoreComments = function () {
 
   const remainingItems = Math.min(maxShownComments, hiddenComments.length);
   for (let i = 0; i < remainingItems; i++) {
     hiddenComments[i].classList.remove('hidden');
-    visibleComments++;
     commentsShownCounter.textContent = comments.length - hiddenComments.length;
   }
-
-  if (visibleComments >= comments.length) {
+  if (hiddenComments.length === 0) {
     commentsLoaderButton.classList.add('hidden');
   }
 
@@ -47,12 +46,6 @@ const loadMoreComments = function () {
 const onLoadCommentsButton = () => {
   loadMoreComments();
 };
-
-const showComments = function () {
-  commentsLoaderButton.addEventListener('click', onLoadCommentsButton);
-
-};
-
 
 const renderComments = (picture) => {
   commentsList.innerHTML = '';
@@ -73,25 +66,35 @@ const renderComments = (picture) => {
   commentsList.append(commentFragment);
 
   hideComments(maxShownComments);
+  if (hiddenComments.length === 0) {
+    commentsLoaderButton.classList.add('hidden');
+  }
   commentsTotalCounter.textContent = picture.comments.length;
   commentsShownCounter.textContent = comments.length - hiddenComments.length;
-  commentsLoaderButton.classList.toggle('hidden', picture.comments.length <= maxShownComments);
-  showComments();
+  commentsLoaderButton.addEventListener('click', onLoadCommentsButton);
+};
+
+//открытие и закрытие
 
 
+const closePopup = () => {
+  bigPicturePopup.classList.add('hidden');
+  document.body.classList.remove('modal-open');
+  document.removeEventListener('keydown', onDocumentKeydown);
+  commentsLoaderButton.removeEventListener('click', onLoadCommentsButton);
+  document.removeEventListener('click', onClosePopupButton);
 };
 
 
-const generatePopup = (pictures) => {
-  pictures.forEach((picture) => {
-    const thumbnail = document.querySelector(`img[src="${picture.url}"]`);
-    thumbnail.addEventListener('click', (evt) => {
-      evt.preventDefault();
-      openPopup(picture);
-
-    });
-  });
-  closePopup();
+const openPopup = (picture) => {
+  bigPictureImage.src = picture.url;
+  bigPictureLikes.textContent = picture.likes;
+  bigPictureDescription.textContent = picture.description;
+  renderComments(picture);
+  bigPicturePopup.classList.remove('hidden');
+  document.body.classList.add('modal-open');
+  document.addEventListener('click', onClosePopupButton);
+  document.addEventListener('keydown', onDocumentKeydown);
 };
 
 const onDocumentKeydown = (evt) => {
@@ -101,27 +104,22 @@ const onDocumentKeydown = (evt) => {
   }
 };
 
-const openPopup = (picture) => {
-  bigPictureImage.src = picture.url;
-  bigPictureLikes.textContent = picture.likes;
-  bigPictureDescription.textContent = picture.description;
-  renderComments(picture);
-  bigPicturePopup.classList.remove('hidden');
-  document.body.classList.add('modal-open');
-
-  document.addEventListener('keydown', onDocumentKeydown);
-};
-
-const closePopup = () => {
-  bigPicturePopup.classList.add('hidden');
-  document.body.classList.remove('modal-open');
-  document.removeEventListener('keydown', onDocumentKeydown);
+const onClosePopupButton = () => {
   bigPictureCloseButton.addEventListener('click', (evt) => {
     evt.preventDefault();
     closePopup();
   });
-  commentsLoaderButton.removeEventListener('click', onLoadCommentsButton);
-  document.addEventListener('keydown', onDocumentKeydown);
+};
+
+
+const generatePopup = (pictures) => {
+  pictures.forEach((picture) => {
+    const thumbnail = document.querySelector(`img[src="${picture.url}"]`);
+    thumbnail.addEventListener('click', () => {
+      openPopup(picture);
+
+    });
+  });
 };
 
 
