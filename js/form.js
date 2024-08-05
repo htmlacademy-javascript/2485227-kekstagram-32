@@ -24,7 +24,7 @@ const generateUserImagePopup = function () {
   body.classList.add('modal-open');
   previewCloseButton.addEventListener('click', onClosePopupButton);
   document.addEventListener('keydown', onDocumentKeydown);
-  comments.addEventListener('keydown', onHashtagsFocus);
+  hashtags.addEventListener('keydown', onHashtagsFocus);
   comments.addEventListener('keydown', onCommentsFocus);
 };
 
