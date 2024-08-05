@@ -1,8 +1,5 @@
 import '../vendor/nouislider/nouislider.js';
 
-const maxValue = 100;
-const minValue = 25;
-
 const slider = document.querySelector('.effect-level__slider');
 const imagePreview = document.querySelector('.img-upload__preview');
 const changeFilterButtons = document.querySelectorAll('.effects__radio');
@@ -10,14 +7,13 @@ const sliderContainer = document.querySelector('.img-upload__effect-level');
 
 
 noUiSlider.create(slider, {
-  start: [maxValue],
-  connect: true,
+  start: [100],
+  connect: 'lower',
   range: {
-    min: minValue,
-    max: maxValue
+    min: 0,
+    max: 100
   }
 });
-
 
 
 const filters = {

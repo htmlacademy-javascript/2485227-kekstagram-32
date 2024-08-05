@@ -59,7 +59,7 @@ const onCommentsFocus = (event) => {
   }
 };
 
-// по изменению инпута
+// по изменению
 const openUserImagePopup = function () {
   uploadImageInput.addEventListener('change', onImageUpload);
 };
@@ -70,19 +70,11 @@ const onImageUpload = function (evt) {
   generateUserImagePopup();
 };
 
-//ресетит все поля
-const formInputReset = function () {
-  uploadImageInput.value = '';
-  filterInputs.value = '';
-  hashtags.value = '';
-  comments.value = '';
-};
-
 //закрытие попапа
 const closeUserImagePopup = function () {
   uploadImageOverlay.classList.add('hidden');
   body.classList.remove('modal-open');
-  formInputReset();
+  form.reset();
   previewCloseButton.removeEventListener('click', onClosePopupButton);
   document.removeEventListener('keydown', onDocumentKeydown);
   comments.removeEventListener('keydown', onHashtagsFocus);
