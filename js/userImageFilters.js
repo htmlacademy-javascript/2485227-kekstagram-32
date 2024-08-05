@@ -1,5 +1,3 @@
-import '../vendor/nouislider/nouislider.js';
-
 const slider = document.querySelector('.effect-level__slider');
 const imagePreview = document.querySelector('.img-upload__preview');
 const changeFilterButtons = document.querySelectorAll('.effects__radio');
@@ -24,8 +22,6 @@ const filters = {
   heat: { filter: 'brightness', min: 1, max: 3, step: 0.1, unit: '' },
   none: { filter: 'none', min: 0, max: 100, step: 1, unit: '' }
 };
-
-
 
 //filters
 changeFilterButtons.forEach((button) => {

@@ -10,7 +10,6 @@ const uploadImageOverlay = form.querySelector('.img-upload__overlay');
 const previewImageContainer = document.querySelector('.img-upload__preview');
 const previewImage = previewImageContainer.querySelector('img');
 const previewCloseButton = document.querySelector('.img-upload__cancel');
-const filterInputs = form.querySelectorAll('.effects__radio');
 const hashtags = form.querySelector('.text__hashtags');
 const comments = form.querySelector('.text__description');
 
@@ -24,45 +23,38 @@ const generateUserImagePopup = function () {
   body.classList.add('modal-open');
   previewCloseButton.addEventListener('click', onClosePopupButton);
   document.addEventListener('keydown', onDocumentKeydown);
-  hashtags.addEventListener('keydown', onHashtagsFocus);
-  comments.addEventListener('keydown', onCommentsFocus);
+};
+
+const isFocused = function (element) {
+  return document.activeElement === element;
 };
 
 const onClosePopupButton = function (evt) {
-  evt.preventDefault();
-  closeUserImagePopup();
+
+  if (isFocused(hashtags) || isFocused(comments)) {
+    evt.stopPropagation();
+
+  } else {
+    closeUserImagePopup();
+  }
 };
 
 const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    closeUserImagePopup();
+    if (isFocused(hashtags) || isFocused(comments)) {
+      evt.stopPropagation();
+
+    } else {
+      closeUserImagePopup();
+    }
+
   }
 };
 
-hashtags.addEventListener('keydown', (event) => {
-  if (event.key === 'Escape') {
-    event.stopPropagation();
-  }
-});
-
-
-const onHashtagsFocus = (event) => {
-  if (event.key === 'Escape') {
-    event.stopPropagation();
-  }
-};
-
-const onCommentsFocus = (event) => {
-  if (event.key === 'Escape') {
-    event.stopPropagation();
-  }
-};
 
 // по изменению
-const openUserImagePopup = function () {
-  uploadImageInput.addEventListener('change', onImageUpload);
-};
+uploadImageInput.addEventListener('change', onImageUpload);
 
 //по изменению поля рисуется и показывается модалка
 const onImageUpload = function (evt) {
@@ -77,10 +69,7 @@ const closeUserImagePopup = function () {
   form.reset();
   previewCloseButton.removeEventListener('click', onClosePopupButton);
   document.removeEventListener('keydown', onDocumentKeydown);
-  comments.removeEventListener('keydown', onHashtagsFocus);
-  comments.removeEventListener('keydown', onCommentsFocus);
   removeScaleListeners();
 };
 
 
-openUserImagePopup();
