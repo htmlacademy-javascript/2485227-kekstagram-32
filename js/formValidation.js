@@ -1,11 +1,20 @@
-import '../vendor/pristine/pristine.min.js';
+import {sendFormData} from './api.js';
 
 const form = document.querySelector('.img-upload__form');
 const hashtagsInput = form.querySelector('.text__hashtags');
 const comments = form.querySelector('.text__description');
+const submitButton = form.querySelector('.img-upload__submit');
 
-const hashtagRequirements = /^#[a-zа-яё0-9]{1,19}$/i;
+const HASHTAG_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
+const MAX_HASHTAG_COUNT = 5;
+const MAX_COMMENTS_LENGTH = 140;
 
+const ErrorText = {
+  INVALID_COUNT: `Максимум ${MAX_HASHTAG_COUNT} хэштегов`,
+  NOT_UNIQUE: 'Хэштеги должны быть уникальными',
+  INVALID_PATTERN: 'Неправильный хэштег' ,
+  INVALID_LENGTH: 'Максимальная длина комментария 140 символов'
+};
 
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
@@ -14,31 +23,64 @@ const pristine = new Pristine(form, {
 });
 
 
-pristine.addValidator(hashtagsInput, validateHashtags, 'Хэштеги должны начинаться с # и содержать от 1 до 20 символов');
-pristine.addValidator(comments, validateComment, 'Комментарий не может содержать больше 140 символов');
+const parseHashtags = (value) => value.trim().split(/\s+/);
 
-
-form.addEventListener('submit', (evt) => {
-  const isValid = pristine.validate();
-
-  if (!isValid) {
-    evt.preventDefault();
-  }
-});
-
-function validateHashtags(value) {
-  const hashtags = value.trim().split(/\s+/);
-  if (hashtags.length > 5) {
-    return false;
-  }
+const hasUniqueTags = (value) => {
+  const hashtags = parseHashtags(value);
   const lowerCaseTags = hashtags.map((tag) => tag.toLowerCase());
-  const uniqueTags = new Set(lowerCaseTags);
-  if (uniqueTags.size !== hashtags.length) {
-    return false;
-  }
-  return hashtags.every((tag) => hashtagRequirements.test(tag));
-}
+  return lowerCaseTags.length === new Set(lowerCaseTags).size;
+};
 
-function validateComment(value) {
-  return value.length <= 140;
-}
+const hasValidNumber = (value) => parseHashtags(value).length <= MAX_HASHTAG_COUNT;
+
+const hasValidTags = (value) => parseHashtags(value).every((tag) => HASHTAG_SYMBOLS.test(tag));
+
+const hasValidLength = (value) => value.length <= MAX_COMMENTS_LENGTH;
+
+pristine.addValidator (
+  hashtagsInput,
+  hasValidNumber,
+  ErrorText.INVALID_COUNT,
+  3,
+  true
+);
+
+pristine.addValidator (
+  hashtagsInput,
+  hasUniqueTags,
+  ErrorText.NOT_UNIQUE,
+  2,
+  true
+);
+
+pristine.addValidator (
+  hashtagsInput,
+  hasValidTags,
+  ErrorText.INVALID_PATTERN,
+  1,
+  true
+);
+
+pristine.addValidator (
+  comments,
+  hasValidLength,
+  ErrorText.INVALID_LENGTH,
+  1,
+  true
+);
+
+const setUserFormSubmit = (onSuccess) => {
+  form.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    if (pristine.validate()) {
+      submitButton.disabled = true;
+      sendFormData(new FormData(evt.target))
+        .then(onSuccess)
+        .catch((err) => {
+          showAlert(err.message);
+        })
+        .finally(submitButton.disabled = false);
+    }
+  });
+};
+export {setUserFormSubmit};
