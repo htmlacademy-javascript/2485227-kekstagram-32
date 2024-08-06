@@ -1,6 +1,9 @@
+import {sendFormData} from './api.js';
+
 const form = document.querySelector('.img-upload__form');
 const hashtagsInput = form.querySelector('.text__hashtags');
 const comments = form.querySelector('.text__description');
+const submitButton = form.querySelector('.img-upload__submit');
 
 const HASHTAG_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
 const MAX_HASHTAG_COUNT = 5;
@@ -66,8 +69,18 @@ pristine.addValidator (
   true
 );
 
-form.addEventListener('submit', (evt) => {
-  if (!pristine.validate()) {
+const setUserFormSubmit = (onSuccess) => {
+  form.addEventListener('submit', (evt) => {
     evt.preventDefault();
-  }
-});
+    if (pristine.validate()) {
+      submitButton.disabled = true;
+      sendFormData(new FormData(evt.target))
+        .then(onSuccess)
+        .catch((err) => {
+          showAlert(err.message);
+        })
+        .finally(submitButton.disabled = false);
+    }
+  });
+};
+export {setUserFormSubmit};

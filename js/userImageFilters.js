@@ -2,7 +2,7 @@ const slider = document.querySelector('.effect-level__slider');
 const imagePreview = document.querySelector('.img-upload__preview');
 const changeFilterButtons = document.querySelectorAll('.effects__radio');
 const sliderContainer = document.querySelector('.img-upload__effect-level');
-
+const effectValue = document.querySelector('.effect-level__value');
 
 noUiSlider.create(slider, {
   start: [100],
@@ -52,7 +52,7 @@ function onSliderValueChange() {
   const selectedFilter = document.querySelector('.effects__radio:checked').value;
   const filterConfig = filters[selectedFilter];
   const sliderValue = slider.noUiSlider.get();
-
+  effectValue.value = sliderValue;
   if (filterConfig && filterConfig.filter !== 'none') {
     applyFilter(selectedFilter, sliderValue);
   } else {

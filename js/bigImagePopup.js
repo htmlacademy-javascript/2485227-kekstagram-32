@@ -18,7 +18,7 @@ const commentsLoaderButton = document.querySelector('.social__comments-loader');
 
 
 //подгрузка комментариев
-const hideComments = function (MAX_SHOWN_COMMENTS) {
+const hideComments = function () {
   if (comments.length > MAX_SHOWN_COMMENTS) {
     for (let i = MAX_SHOWN_COMMENTS; i < comments.length; i++) {
       comments[i].classList.add('hidden');
@@ -28,7 +28,6 @@ const hideComments = function (MAX_SHOWN_COMMENTS) {
 
 //после определенного количества кликов по кнопке происходит(TypeError: undefined is not an object (evaluating 'hiddenComments[i].classList')) и комментарии начинают подгружаться по 1-2-3 штуки
 const loadMoreComments = function () {
-
   const remainingItems = Math.min(MAX_SHOWN_COMMENTS, hiddenComments.length);
   for (let i = 0; i < remainingItems; i++) {
     hiddenComments[i].classList.remove('hidden');
@@ -37,8 +36,6 @@ const loadMoreComments = function () {
   if (hiddenComments.length === 0) {
     commentsLoaderButton.classList.add('hidden');
   }
-
-
 };
 
 
@@ -54,7 +51,6 @@ const renderComments = (picture) => {
     const commentElement = commentTemplate.cloneNode(true);
     const commentAvatar = commentElement.querySelector('.social__picture');
     const commentText = commentElement.querySelector('.social__text');
-
     commentAvatar.src = comment.avatar;
     commentAvatar.alt = comment.name;
     commentText.textContent = comment.message;
@@ -70,7 +66,9 @@ const renderComments = (picture) => {
   }
   commentsTotalCounter.textContent = picture.comments.length;
   commentsShownCounter.textContent = comments.length - hiddenComments.length;
+  commentsLoaderButton.classList.remove('hidden');
   commentsLoaderButton.addEventListener('click', onLoadCommentsButton);
+
 };
 
 //открытие и закрытие
@@ -82,6 +80,7 @@ const closePopup = () => {
   document.removeEventListener('keydown', onDocumentKeydown);
   commentsLoaderButton.removeEventListener('click', onLoadCommentsButton);
   document.removeEventListener('click', onClosePopupButton);
+  bigPictureCloseButton.removeEventListener('click', onClosePopupButton);
 };
 
 
@@ -91,6 +90,7 @@ const openPopup = (picture) => {
   bigPictureDescription.textContent = picture.description;
   renderComments(picture);
   bigPicturePopup.classList.remove('hidden');
+
   document.body.classList.add('modal-open');
   document.addEventListener('click', onClosePopupButton);
   document.addEventListener('keydown', onDocumentKeydown);
@@ -123,6 +123,6 @@ const generatePopup = (pictures) => {
 };
 
 
-export { generatePopup };
+export {generatePopup};
 
 

@@ -1,5 +1,5 @@
 import { isEscapeKey } from './util.js';
-import './formValidation.js';
+
 import {removeScaleListeners} from './userImageScale.js';
 
 
@@ -25,18 +25,36 @@ const generateUserImagePopup = function () {
   document.addEventListener('keydown', onDocumentKeydown);
 };
 
+
+const onImageUpload = function (evt) {
+  evt.preventDefault();
+  generateUserImagePopup();
+};
+
+// по изменению
+uploadImageInput.addEventListener('change', onImageUpload);
+
+//по изменению поля рисуется и показывается модалка
+
+
+//закрытие попапа
+const closeUserImagePopup = function () {
+  uploadImageOverlay.classList.add('hidden');
+  body.classList.remove('modal-open');
+  form.reset();
+  previewCloseButton.removeEventListener('click', onClosePopupButton);
+  document.removeEventListener('keydown', onDocumentKeydown);
+  removeScaleListeners();
+};
+
 const isFocused = function (element) {
   return document.activeElement === element;
 };
 
 const onClosePopupButton = function (evt) {
+  evt.preventDefault();
+  closeUserImagePopup();
 
-  if (isFocused(hashtags) || isFocused(comments)) {
-    evt.stopPropagation();
-
-  } else {
-    closeUserImagePopup();
-  }
 };
 
 const onDocumentKeydown = (evt) => {
@@ -51,25 +69,4 @@ const onDocumentKeydown = (evt) => {
 
   }
 };
-
-
-// по изменению
-uploadImageInput.addEventListener('change', onImageUpload);
-
-//по изменению поля рисуется и показывается модалка
-const onImageUpload = function (evt) {
-  evt.preventDefault();
-  generateUserImagePopup();
-};
-
-//закрытие попапа
-const closeUserImagePopup = function () {
-  uploadImageOverlay.classList.add('hidden');
-  body.classList.remove('modal-open');
-  form.reset();
-  previewCloseButton.removeEventListener('click', onClosePopupButton);
-  document.removeEventListener('keydown', onDocumentKeydown);
-  removeScaleListeners();
-};
-
-
+export {closeUserImagePopup};
