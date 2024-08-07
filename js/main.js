@@ -8,6 +8,7 @@ import {getUserPictures, showError, showFormSuccessMessage, showFormErrorMessage
 import {closeUserImagePopup} from './form.js';
 import {showFilters} from './thumbnailsFilters.js';
 import './thumbnailsFilters.js';
+
 let pictures = [];
 
 getUserPictures()

@@ -1,6 +1,9 @@
 import { generateMiniatures } from './miniature.js';
 import { pictures } from './main.js';
 import { generatePopup } from './bigImagePopup.js';
+import {debounce} from './util.js';
+
+const RERENDER_DELAY = 500;
 
 const RANDOM_PICTURE_COUNT = 10;
 const filtersSection = document.querySelector('.img-filters');
@@ -33,7 +36,6 @@ const applyFilter = function (pictures, filterName) {
   } else if (filterName === 'filter-discussed') {
     filteredPictures = getDiscussedPictures(pictures);
   }
-
   generateMiniatures(filteredPictures);
   generatePopup(filteredPictures);
 };
@@ -43,6 +45,8 @@ const showFilters = function() {
   filtersSection.classList.remove('img-filters--inactive');
 };
 
+const debouncedApplyFilter = debounce(applyFilter, RERENDER_DELAY);
+
 const onFilterClick = function (evt) {
   filterButtons.forEach((button) => {
     button.classList.remove('img-filters__button--active');
@@ -50,7 +54,7 @@ const onFilterClick = function (evt) {
   evt.target.classList.add('img-filters__button--active');
   const filterName = evt.target.id;
 
-  applyFilter(pictures, filterName);
+  debouncedApplyFilter(pictures, filterName);
 };
 
 filtersForm.addEventListener('click', onFilterClick);
