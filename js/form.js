@@ -47,6 +47,8 @@ const closeUserImagePopup = function () {
   removeScaleListeners();
 };
 
+
+
 const isFocused = function (element) {
   return document.activeElement === element;
 };
@@ -54,6 +56,7 @@ const isFocused = function (element) {
 const onClosePopupButton = function (evt) {
   evt.preventDefault();
   closeUserImagePopup();
+  form.reset();
 
 };
 

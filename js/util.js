@@ -1,4 +1,4 @@
-const ALERT_SHOW_TIME = 5000;
+
 
 const getRandomInteger = (a, b) => {
   const lower = Math.ceil (Math.min(a, b));
@@ -20,5 +20,6 @@ const createIdGenerator = () => {
 };
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
+
 
 export {getRandomInteger, getRandomArrayElement, createIdGenerator, isEscapeKey};
