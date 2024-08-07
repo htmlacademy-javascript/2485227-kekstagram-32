@@ -1,38 +1,29 @@
 import { isEscapeKey } from './util.js';
 
 import {removeScaleListeners} from './userImageScale.js';
-
+import {} from './userImage.js';
 
 const body = document.body;
 const form = document.querySelector('.img-upload__form');
-const uploadImageInput = form.querySelector('.img-upload__input');
 const uploadImageOverlay = form.querySelector('.img-upload__overlay');
-const previewImageContainer = document.querySelector('.img-upload__preview');
-const previewImage = previewImageContainer.querySelector('img');
+const uploadImageInput = form.querySelector('.img-upload__input');
 const previewCloseButton = document.querySelector('.img-upload__cancel');
 const hashtags = form.querySelector('.text__hashtags');
 const comments = form.querySelector('.text__description');
 
+const onImageUpload = function () {
+  generateUserImagePopup();
+};
 
 const generateUserImagePopup = function () {
-//заполняет данные
-  const uploadedImage = uploadImageInput.files[0];
-  previewImage.src = URL.createObjectURL(uploadedImage);
-  //показывает
   uploadImageOverlay.classList.remove('hidden');
   body.classList.add('modal-open');
   previewCloseButton.addEventListener('click', onClosePopupButton);
   document.addEventListener('keydown', onDocumentKeydown);
 };
-
-
-const onImageUpload = function (evt) {
-  evt.preventDefault();
-  generateUserImagePopup();
-};
-
-// по изменению
 uploadImageInput.addEventListener('change', onImageUpload);
+
+
 
 //по изменению поля рисуется и показывается модалка
 

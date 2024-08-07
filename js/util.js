@@ -22,4 +22,12 @@ const createIdGenerator = () => {
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
 
-export {getRandomInteger, getRandomArrayElement, createIdGenerator, isEscapeKey};
+const debounce = (callback, timeoutDelay) => {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+};
+
+export {getRandomInteger, getRandomArrayElement, createIdGenerator, isEscapeKey, debounce};
