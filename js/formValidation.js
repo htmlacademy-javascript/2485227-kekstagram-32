@@ -69,17 +69,23 @@ pristine.addValidator (
   true
 );
 
-const setUserFormSubmit = (onSuccess) => {
+const setUserFormSubmit = (onSuccess, showSuccessMessage,showFormErrorMessage) => {
   form.addEventListener('submit', (evt) => {
     evt.preventDefault();
     if (pristine.validate()) {
       submitButton.disabled = true;
       sendFormData(new FormData(evt.target))
-        .then(onSuccess)
-        .catch((err) => {
-          showAlert(err.message);
+        .then(() => {
+          onSuccess();
+          showSuccessMessage();
         })
-        .finally(submitButton.disabled = false);
+        .catch((error) => {
+          showFormErrorMessage(error);
+        })
+
+        .finally(() => {
+          submitButton.disabled = false;
+        });
     }
   });
 };
