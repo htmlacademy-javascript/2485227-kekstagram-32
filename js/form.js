@@ -1,7 +1,7 @@
 import { isEscapeKey } from './util.js';
 
 import {removeScaleListeners} from './userImageScale.js';
-import {} from './userImage.js';
+import {pristine} from './formValidation.js';
 
 const body = document.body;
 const form = document.querySelector('.img-upload__form');
@@ -33,6 +33,7 @@ const closeUserImagePopup = function () {
   uploadImageOverlay.classList.add('hidden');
   body.classList.remove('modal-open');
   form.reset();
+  pristine.reset();
   previewCloseButton.removeEventListener('click', onClosePopupButton);
   document.removeEventListener('keydown', onDocumentKeydown);
   removeScaleListeners();
@@ -47,7 +48,8 @@ const isFocused = function (element) {
 const onClosePopupButton = function (evt) {
   evt.preventDefault();
   closeUserImagePopup();
-  form.reset();
+
+
 
 };
 

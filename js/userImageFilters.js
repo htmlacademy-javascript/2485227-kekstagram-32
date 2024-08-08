@@ -1,5 +1,6 @@
 const slider = document.querySelector('.effect-level__slider');
-const imagePreview = document.querySelector('.img-upload__preview');
+const imagePreviewContainer = document.querySelector('.img-upload__preview');
+const imagePreview = imagePreviewContainer.getElementsByTagName('img');
 const changeFilterButtons = document.querySelectorAll('.effects__radio');
 const sliderContainer = document.querySelector('.img-upload__effect-level');
 const effectValue = document.querySelector('.effect-level__value');
@@ -51,12 +52,20 @@ function onFilterButtonChange(event) {
 function onSliderValueChange() {
   const selectedFilter = document.querySelector('.effects__radio:checked').value;
   const filterConfig = filters[selectedFilter];
-  const sliderValue = slider.noUiSlider.get();
+  let sliderValue = slider.noUiSlider.get();
+  const sliderValueCheck = parseFloat(sliderValue);
+
+  if (sliderValueCheck % 1 !== 0) {
+    sliderValue = sliderValueCheck.toFixed(1);
+  } else {
+    sliderValue = sliderValueCheck.toString();
+  }
+
   effectValue.value = sliderValue;
   if (filterConfig && filterConfig.filter !== 'none') {
     applyFilter(selectedFilter, sliderValue);
   } else {
-    imagePreview.style.filter = 'none';
+    imagePreview[0].style.filter = 'none';
   }
 }
 
@@ -65,9 +74,9 @@ function applyFilter(filterName, value) {
 
   if (filterConfig.filter !== 'none') {
     sliderContainer.classList.remove('hidden');
-    imagePreview.style.filter = `${filterConfig.filter}(${value}${filterConfig.unit})`;
+    imagePreview[0].style.filter = `${filterConfig.filter}(${value}${filterConfig.unit})`;
   } else {
-    imagePreview.style.filter = 'none';
+    imagePreview[0].style.filter = 'none';
     sliderContainer.classList.add('hidden');
   }
 }
