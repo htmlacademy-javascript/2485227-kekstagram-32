@@ -5,16 +5,17 @@ const DEFAULT_VALUE = 100;
 const scaleDownButton = document.querySelector('.scale__control--smaller');
 const scaleUpButton = document.querySelector('.scale__control--bigger');
 const scaleInput = document.querySelector('.scale__control--value');
-const imagePreview = document.querySelector('.img-upload__preview');
-
+const imagePreviewContainer = document.querySelector('.img-upload__preview');
+const imagePreview = imagePreviewContainer.getElementsByTagName('img');
 //scale
 
 scaleInput.value = `${DEFAULT_VALUE}%`;
 
 const onScaleValueChange = function () {
+
   const scaleValue = parseInt(scaleInput.value, 10);
-  if (scaleValue >= MIN_VALUE && scaleValue <= MAX_VALUE ) {
-    imagePreview.style.transform = `scale(${scaleValue / 100})`;
+  if (scaleValue >= MIN_VALUE && scaleValue <= MAX_VALUE) {
+    imagePreview[0].style.transform = `scale(${scaleValue / 100})`;
   }
 };
 

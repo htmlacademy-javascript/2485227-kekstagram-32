@@ -15,9 +15,10 @@ getUserPictures()
 
   .then((data) => {
     pictures = data;
+    showFilters();
     generateMiniatures(pictures);
     generatePopup(pictures);
-    showFilters();
+
   })
   .catch(() => {
     showError();

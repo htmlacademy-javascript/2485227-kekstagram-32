@@ -26,14 +26,23 @@ const pristine = new Pristine(form, {
 const parseHashtags = (value) => value.trim().split(/\s+/);
 
 const hasUniqueTags = (value) => {
+  if (!value.trim()) return true;
   const hashtags = parseHashtags(value);
   const lowerCaseTags = hashtags.map((tag) => tag.toLowerCase());
   return lowerCaseTags.length === new Set(lowerCaseTags).size;
 };
 
-const hasValidNumber = (value) => parseHashtags(value).length <= MAX_HASHTAG_COUNT;
+// Проверка на допустимое количество
+const hasValidNumber = (value) => {
+  if (!value.trim()) return true;
+  return parseHashtags(value).length <= MAX_HASHTAG_COUNT;
+};
 
-const hasValidTags = (value) => parseHashtags(value).every((tag) => HASHTAG_SYMBOLS.test(tag));
+// Проверка на правильность хештегов
+const hasValidTags = (value) => {
+  if (!value.trim()) return true;
+  return parseHashtags(value).every((tag) => HASHTAG_SYMBOLS.test(tag));
+};
 
 const hasValidLength = (value) => value.length <= MAX_COMMENTS_LENGTH;
 
@@ -89,4 +98,4 @@ const setUserFormSubmit = (onSuccess, showSuccessMessage,showFormErrorMessage) =
     }
   });
 };
-export {setUserFormSubmit};
+export {setUserFormSubmit, pristine};
