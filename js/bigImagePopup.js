@@ -1,5 +1,4 @@
 import { isEscapeKey } from './util.js';
-
 const MAX_SHOWN_COMMENTS = 5;
 const bigPicturePopup = document.querySelector('.big-picture');
 
@@ -68,12 +67,9 @@ const renderComments = (picture) => {
   commentsShownCounter.textContent = comments.length - hiddenComments.length;
   commentsLoaderButton.classList.remove('hidden');
   commentsLoaderButton.addEventListener('click', onLoadCommentsButton);
-
 };
 
 //открытие и закрытие
-
-
 const closePopup = () => {
   bigPicturePopup.classList.add('hidden');
   document.body.classList.remove('modal-open');
@@ -90,7 +86,6 @@ const openPopup = (picture) => {
   bigPictureDescription.textContent = picture.description;
   renderComments(picture);
   bigPicturePopup.classList.remove('hidden');
-
   document.body.classList.add('modal-open');
   document.addEventListener('click', onClosePopupButton);
   document.addEventListener('keydown', onDocumentKeydown);
