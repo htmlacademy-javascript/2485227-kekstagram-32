@@ -82,3 +82,10 @@ function applyFilter(filterName, value) {
 }
 
 slider.noUiSlider.on('update', onSliderValueChange);
+
+const resetFilters = function () {
+  imagePreview[0].style.filter = 'none';
+  sliderContainer.classList.add('hidden');
+};
+
+export {resetFilters};
