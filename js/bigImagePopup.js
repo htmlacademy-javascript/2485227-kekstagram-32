@@ -23,16 +23,24 @@ const hideComments = function () {
       comments[i].classList.add('hidden');
     }
   }
+  if (commentsList.getElementsByClassName('hidden').length === 0) {
+    commentsLoaderButton.classList.add('hidden');
+
+  }
+
 };
 
-//после определенного количества кликов по кнопке происходит(TypeError: undefined is not an object (evaluating 'hiddenComments[i].classList')) и комментарии начинают подгружаться по 1-2-3 штуки
 const loadMoreComments = function () {
-  const remainingItems = Math.min(MAX_SHOWN_COMMENTS, hiddenComments.length);
+  const hiddenCommentsArray = Array.from(hiddenComments);
+  const remainingItems = Math.min(MAX_SHOWN_COMMENTS, hiddenCommentsArray.length);
+
+
   for (let i = 0; i < remainingItems; i++) {
-    hiddenComments[i].classList.remove('hidden');
-    commentsShownCounter.textContent = comments.length - hiddenComments.length;
+    hiddenCommentsArray[i].classList.remove('hidden');
+    commentsShownCounter.textContent = comments.length - commentsList.getElementsByClassName('hidden').length;
   }
-  if (hiddenComments.length === 0) {
+
+  if (commentsList.getElementsByClassName('hidden').length === 0) {
     commentsLoaderButton.classList.add('hidden');
   }
 };
@@ -59,13 +67,13 @@ const renderComments = (picture) => {
 
   commentsList.append(commentFragment);
 
-  hideComments(MAX_SHOWN_COMMENTS);
-  if (hiddenComments.length === 0) {
-    commentsLoaderButton.classList.add('hidden');
-  }
+  hideComments();
+
   commentsTotalCounter.textContent = picture.comments.length;
   commentsShownCounter.textContent = comments.length - hiddenComments.length;
-  commentsLoaderButton.classList.remove('hidden');
+  if (commentsList.getElementsByClassName('hidden').length !== 0) {
+    commentsLoaderButton.classList.remove('hidden');
+  };
   commentsLoaderButton.addEventListener('click', onLoadCommentsButton);
 };
 
@@ -85,6 +93,7 @@ const openPopup = (picture) => {
   bigPictureLikes.textContent = picture.likes;
   bigPictureDescription.textContent = picture.description;
   renderComments(picture);
+
   bigPicturePopup.classList.remove('hidden');
   document.body.classList.add('modal-open');
   document.addEventListener('click', onClosePopupButton);
@@ -116,7 +125,6 @@ const generatePopup = (pictures) => {
     });
   });
 };
-
 
 export {generatePopup};
 
