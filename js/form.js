@@ -1,9 +1,8 @@
 import { isEscapeKey } from './util.js';
-
-import {removeScaleListeners} from './userImageScale.js';
+import {removeScaleListeners, addScaleListeners} from './userImageScale.js';
+import {pristine} from './formValidation.js';
 import {resetFilters} from './userImageFilters.js';
 import {resetScale} from './userImageScale.js';
-import {pristine} from './formValidation.js';
 
 const body = document.body;
 const form = document.querySelector('.img-upload__form');
@@ -17,13 +16,15 @@ const comments = form.querySelector('.text__description');
 const generateUserImagePopup = function () {
   uploadImageOverlay.classList.remove('hidden');
   body.classList.add('modal-open');
+  addScaleListeners();
   previewCloseButton.addEventListener('click', onClosePopupButton);
   document.addEventListener('keydown', onDocumentKeydown);
+
+};
+const onImageUpload = function () {
+  generateUserImagePopup();
 };
 uploadImageInput.addEventListener('change', onImageUpload);
-
-
-//по изменению поля рисуется и показывается модалка
 
 
 //закрытие попапа
@@ -36,9 +37,9 @@ const closeUserImagePopup = function () {
   form.reset();
   pristine.reset();
   previewCloseButton.removeEventListener('click', onClosePopupButton);
-  document.removeEventListener('keydown', onDocumentKeydown);
-  removeScaleListeners();
+
 };
+
 
 const isFocused = function (element) {
   return document.activeElement === element;
@@ -47,18 +48,18 @@ const isFocused = function (element) {
 const onClosePopupButton = function (evt) {
   evt.preventDefault();
   closeUserImagePopup();
+
+
 };
 
 const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    if (isFocused(hashtags) || isFocused(comments)) {
-      evt.stopPropagation();
-
-    } else {
+    if (!isFocused(hashtags) || !isFocused(comments)) {
       closeUserImagePopup();
+    } else {
+      evt.stopPropagation();
     }
-
   }
 };
-export {closeUserImagePopup};
+export {closeUserImagePopup, onDocumentKeydown};

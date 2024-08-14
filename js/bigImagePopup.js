@@ -1,4 +1,5 @@
 import { isEscapeKey } from './util.js';
+
 const MAX_SHOWN_COMMENTS = 5;
 const bigPicturePopup = document.querySelector('.big-picture');
 
@@ -29,17 +30,13 @@ const hideComments = function () {
   }
 
 };
-
 const loadMoreComments = function () {
   const hiddenCommentsArray = Array.from(hiddenComments);
   const remainingItems = Math.min(MAX_SHOWN_COMMENTS, hiddenCommentsArray.length);
-
-
   for (let i = 0; i < remainingItems; i++) {
     hiddenCommentsArray[i].classList.remove('hidden');
     commentsShownCounter.textContent = comments.length - commentsList.getElementsByClassName('hidden').length;
   }
-
   if (commentsList.getElementsByClassName('hidden').length === 0) {
     commentsLoaderButton.classList.add('hidden');
   }
@@ -67,18 +64,22 @@ const renderComments = (picture) => {
 
   commentsList.append(commentFragment);
 
-  hideComments();
-
+  hideComments(MAX_SHOWN_COMMENTS);
+  if (hiddenComments.length === 0) {
+    commentsLoaderButton.classList.add('hidden');
+  }
   commentsTotalCounter.textContent = picture.comments.length;
   commentsShownCounter.textContent = comments.length - hiddenComments.length;
-  commentsLoaderButton.classList.remove('hidden');
   if (commentsList.getElementsByClassName('hidden').length !== 0) {
     commentsLoaderButton.classList.remove('hidden');
   }
   commentsLoaderButton.addEventListener('click', onLoadCommentsButton);
+
 };
 
 //открытие и закрытие
+
+
 const closePopup = () => {
   bigPicturePopup.classList.add('hidden');
   document.body.classList.remove('modal-open');
@@ -94,8 +95,8 @@ const openPopup = (picture) => {
   bigPictureLikes.textContent = picture.likes;
   bigPictureDescription.textContent = picture.description;
   renderComments(picture);
-
   bigPicturePopup.classList.remove('hidden');
+
   document.body.classList.add('modal-open');
   document.addEventListener('click', onClosePopupButton);
   document.addEventListener('keydown', onDocumentKeydown);
@@ -127,6 +128,6 @@ const generatePopup = (pictures) => {
   });
 };
 
-export {generatePopup};
 
+export {generatePopup};
 
