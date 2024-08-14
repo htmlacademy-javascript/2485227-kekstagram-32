@@ -7,7 +7,6 @@ const scaleUpButton = document.querySelector('.scale__control--bigger');
 const scaleInput = document.querySelector('.scale__control--value');
 const imagePreviewContainer = document.querySelector('.img-upload__preview');
 const imagePreview = imagePreviewContainer.getElementsByTagName('img');
-//scale
 
 scaleInput.value = `${DEFAULT_VALUE}%`;
 
@@ -35,21 +34,27 @@ const onScaleUpButton = function () {
   }
 };
 
-//event listeners
-scaleInput.addEventListener('change', onScaleValueChange);
-scaleDownButton.addEventListener('click', onScaleDownButton);
-scaleUpButton.addEventListener('click', onScaleUpButton);
+const addScaleListeners = function () {
+  scaleInput.addEventListener('change', onScaleValueChange);
+  scaleDownButton.addEventListener('click', onScaleDownButton);
+  scaleUpButton.addEventListener('click', onScaleUpButton);
+};
 
+//event listeners
 
 const removeScaleListeners = function () {
   scaleInput.removeEventListener('change', onScaleValueChange);
   scaleDownButton.removeEventListener('click', onScaleDownButton);
   scaleUpButton.removeEventListener('click', onScaleUpButton);
 };
+const resetScale = function () {
+  scaleInput.value = `${DEFAULT_VALUE}%`;
+  imagePreview[0].style.transform = `scale(${DEFAULT_VALUE}%)`;
+};
 
 
 onScaleValueChange();
 
-export {removeScaleListeners};
+export {removeScaleListeners, resetScale, addScaleListeners};
 
 

@@ -27,4 +27,6 @@ getUserPictures()
 
 setUserFormSubmit(closeUserImagePopup, showFormSuccessMessage, showFormErrorMessage);
 
-export { pictures };
+const getPictures = () => pictures;
+
+export { getPictures };

@@ -1,5 +1,5 @@
 import { generateMiniatures } from './miniature.js';
-import { pictures } from './main.js';
+import { getPictures } from './main.js';
 import { generatePopup } from './bigImagePopup.js';
 import {debounce} from './util.js';
 
@@ -54,7 +54,7 @@ const onFilterClick = function (evt) {
   evt.target.classList.add('img-filters__button--active');
   const filterName = evt.target.id;
 
-  debouncedApplyFilter(pictures, filterName);
+  debouncedApplyFilter(getPictures(), filterName);
 };
 
 filtersForm.addEventListener('click', onFilterClick);
