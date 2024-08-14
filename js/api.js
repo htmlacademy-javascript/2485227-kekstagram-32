@@ -1,4 +1,5 @@
 import { isEscapeKey } from './util.js';
+import { onDocumentKeydown } from './form.js';
 const TIME_OUT = 5000;
 
 const formSuccessMessageTemplate = document.querySelector('#success');
@@ -41,9 +42,13 @@ const onSuccessMessageButton = function (evt) {
 };
 
 
+<<<<<<< Updated upstream
 
 //error
+=======
+>>>>>>> Stashed changes
 const showFormErrorMessage = function () {
+  document.removeEventListener('keydown', onDocumentKeydown);
   const formErrorMessage = formErrorMessageTemplate.content.cloneNode(true);
   document.body.appendChild(formErrorMessage);
   const formErrorButton = document.querySelector('.error__button');
@@ -52,12 +57,12 @@ const showFormErrorMessage = function () {
   document.addEventListener('click', onErrorOutsideClick);
 };
 
-
 const closeFormErrorMessage = function () {
   const formErrorMessageSection = document.querySelector('.error');
   document.body.removeChild(formErrorMessageSection);
   document.removeEventListener('keydown', onErrorDocumentKeydown);
   document.removeEventListener('click', onErrorOutsideClick);
+  document.addEventListener('keydown', onDocumentKeydown);
 };
 
 const onErrorOutsideClick = (evt) => {
@@ -79,7 +84,6 @@ const onFormErrorButton = function (evt) {
 };
 
 
-//
 const showError = function () {
   const template = document.querySelector('#data-error');
   const error = template.content.cloneNode(true);

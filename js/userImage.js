@@ -22,6 +22,3 @@ const onImageUpload = function (evt) {
 };
 
 uploadImageInput.addEventListener('change', onImageUpload);
-
-
-

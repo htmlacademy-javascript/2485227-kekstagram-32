@@ -1,13 +1,15 @@
 import {sendFormData} from './api.js';
 
+const HASHTAG_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
+const MAX_HASHTAG_COUNT = 5;
+const MAX_COMMENTS_LENGTH = 140;
+
+
 const form = document.querySelector('.img-upload__form');
 const hashtagsInput = form.querySelector('.text__hashtags');
 const comments = form.querySelector('.text__description');
 const submitButton = form.querySelector('.img-upload__submit');
 
-const HASHTAG_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
-const MAX_HASHTAG_COUNT = 5;
-const MAX_COMMENTS_LENGTH = 140;
 
 const ErrorText = {
   INVALID_COUNT: `Максимум ${MAX_HASHTAG_COUNT} хэштегов`,
