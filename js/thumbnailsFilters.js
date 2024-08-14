@@ -44,7 +44,6 @@ const applyFilter = function (pictures, filterName) {
 };
 
 
-
 const debouncedApplyFilter = debounce(applyFilter, RERENDER_DELAY);
 
 const onFilterClick = function (evt) {
