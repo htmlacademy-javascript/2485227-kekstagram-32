@@ -10,6 +10,9 @@ const filtersSection = document.querySelector('.img-filters');
 const filtersForm = document.querySelector('.img-filters__form');
 const filterButtons = document.querySelectorAll('.img-filters__button');
 
+filtersSection.classList.remove('img-filters--inactive');
+
+
 const getRandomPictures = function (pictures) {
   const filteredPictures = pictures.slice();
   const shuffled = [...filteredPictures].sort(() => 0.5 - Math.random());
@@ -41,9 +44,6 @@ const applyFilter = function (pictures, filterName) {
 };
 
 
-const showFilters = function() {
-  filtersSection.classList.remove('img-filters--inactive');
-};
 
 const debouncedApplyFilter = debounce(applyFilter, RERENDER_DELAY);
 
@@ -60,4 +60,4 @@ const onFilterClick = function (evt) {
 filtersForm.addEventListener('click', onFilterClick);
 
 
-export {showFilters, applyFilter};
+export {applyFilter};
