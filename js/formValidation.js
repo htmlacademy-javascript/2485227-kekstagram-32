@@ -28,7 +28,9 @@ const pristine = new Pristine(form, {
 const parseHashtags = (value) => value.trim().split(/\s+/);
 
 const hasUniqueTags = (value) => {
-  if (!value.trim()) return true;
+  if (!value.trim()) {
+    return true;
+  }
   const hashtags = parseHashtags(value);
   const lowerCaseTags = hashtags.map((tag) => tag.toLowerCase());
   return lowerCaseTags.length === new Set(lowerCaseTags).size;
@@ -36,13 +38,17 @@ const hasUniqueTags = (value) => {
 
 // Проверка на допустимое количество
 const hasValidNumber = (value) => {
-  if (!value.trim()) return true;
+  if (!value.trim()) {
+    return true;
+  }
   return parseHashtags(value).length <= MAX_HASHTAG_COUNT;
 };
 
 // Проверка на правильность хештегов
 const hasValidTags = (value) => {
-  if (!value.trim()) return true;
+  if (!value.trim()) {
+    return true;
+  }
   return parseHashtags(value).every((tag) => HASHTAG_SYMBOLS.test(tag));
 };
 

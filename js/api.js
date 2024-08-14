@@ -42,11 +42,6 @@ const onSuccessMessageButton = function (evt) {
 };
 
 
-<<<<<<< Updated upstream
-
-//error
-=======
->>>>>>> Stashed changes
 const showFormErrorMessage = function () {
   document.removeEventListener('keydown', onDocumentKeydown);
   const formErrorMessage = formErrorMessageTemplate.content.cloneNode(true);
