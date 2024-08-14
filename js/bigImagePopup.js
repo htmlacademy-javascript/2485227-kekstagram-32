@@ -18,6 +18,7 @@ const commentsLoaderButton = document.querySelector('.social__comments-loader');
 
 //подгрузка комментариев
 const hideComments = function () {
+
   if (comments.length > MAX_SHOWN_COMMENTS) {
     for (let i = MAX_SHOWN_COMMENTS; i < comments.length; i++) {
       comments[i].classList.add('hidden');
@@ -67,11 +68,11 @@ const renderComments = (picture) => {
 
   commentsList.append(commentFragment);
 
+
   hideComments();
 
   commentsTotalCounter.textContent = picture.comments.length;
   commentsShownCounter.textContent = comments.length - hiddenComments.length;
-  commentsLoaderButton.classList.remove('hidden');
 
   if (commentsList.getElementsByClassName('hidden').length !== 0) {
     commentsLoaderButton.classList.remove('hidden');
@@ -99,6 +100,8 @@ const openPopup = (picture) => {
 
   bigPicturePopup.classList.remove('hidden');
   document.body.classList.add('modal-open');
+
+
   document.addEventListener('click', onClosePopupButton);
   document.addEventListener('keydown', onDocumentKeydown);
 
@@ -130,5 +133,4 @@ const generatePopup = (pictures) => {
 };
 
 export {generatePopup};
-
 
