@@ -5,6 +5,15 @@ const changeFilterButtons = document.querySelectorAll('.effects__radio');
 const sliderContainer = document.querySelector('.img-upload__effect-level');
 const effectValue = document.querySelector('.effect-level__value');
 
+const filters = {
+  chrome: { filter: 'grayscale', min: 0, max: 1, step: 0.1, unit: '' },
+  sepia: { filter: 'sepia', min: 0, max: 1, step: 0.1, unit: '' },
+  marvin: { filter: 'invert', min: 0, max: 100, step: 1, unit: '%' },
+  phobos: { filter: 'blur', min: 0, max: 3, step: 0.1, unit: 'px' },
+  heat: { filter: 'brightness', min: 1, max: 3, step: 0.1, unit: '' },
+  none: { filter: 'none', min: 0, max: 100, step: 1, unit: '' }
+};
+
 noUiSlider.create(slider, {
   start: [100],
   connect: 'lower',
@@ -14,15 +23,6 @@ noUiSlider.create(slider, {
   }
 });
 
-
-const filters = {
-  chrome: { filter: 'grayscale', min: 0, max: 1, step: 0.1, unit: '' },
-  sepia: { filter: 'sepia', min: 0, max: 1, step: 0.1, unit: '' },
-  marvin: { filter: 'invert', min: 0, max: 100, step: 1, unit: '%' },
-  phobos: { filter: 'blur', min: 0, max: 3, step: 0.1, unit: 'px' },
-  heat: { filter: 'brightness', min: 1, max: 3, step: 0.1, unit: '' },
-  none: { filter: 'none', min: 0, max: 100, step: 1, unit: '' }
-};
 
 //filters
 changeFilterButtons.forEach((button) => {
@@ -82,10 +82,5 @@ function applyFilter(filterName, value) {
 }
 
 slider.noUiSlider.on('update', onSliderValueChange);
-
-const resetFilters = function () {
-  imagePreview[0].style.filter = 'none';
-  sliderContainer.classList.add('hidden');
-};
 
 export {resetFilters};

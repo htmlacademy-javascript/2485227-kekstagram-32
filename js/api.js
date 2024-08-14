@@ -41,7 +41,6 @@ const onSuccessMessageButton = function (evt) {
 };
 
 
-//error
 const showFormErrorMessage = function () {
   const formErrorMessage = formErrorMessageTemplate.content.cloneNode(true);
   document.body.appendChild(formErrorMessage);

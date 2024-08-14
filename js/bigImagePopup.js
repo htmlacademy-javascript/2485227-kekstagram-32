@@ -71,9 +71,10 @@ const renderComments = (picture) => {
 
   commentsTotalCounter.textContent = picture.comments.length;
   commentsShownCounter.textContent = comments.length - hiddenComments.length;
+  commentsLoaderButton.classList.remove('hidden');
   if (commentsList.getElementsByClassName('hidden').length !== 0) {
     commentsLoaderButton.classList.remove('hidden');
-  };
+  }
   commentsLoaderButton.addEventListener('click', onLoadCommentsButton);
 };
 
