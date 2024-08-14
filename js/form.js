@@ -1,6 +1,4 @@
 import { isEscapeKey } from './util.js';
-import {removeScaleListeners} from './userImageScale.js';
-import {pristine} from './formValidation.js';
 import {removeScaleListeners, addScaleListeners} from './userImageScale.js';
 import {pristine} from './formValidation.js';
 import {resetFilters} from './userImageFilters.js';
@@ -27,6 +25,7 @@ const generateUserImagePopup = function () {
 const onImageUpload = function () {
   generateUserImagePopup();
 };
+
 uploadImageInput.addEventListener('change', onImageUpload);
 
 //закрытие попапа
