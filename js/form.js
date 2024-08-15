@@ -1,8 +1,8 @@
 import { isEscapeKey } from './util.js';
-import {removeScaleListeners, addScaleListeners} from './userImageScale.js';
-import {pristine} from './formValidation.js';
-import {resetFilters} from './userImageFilters.js';
-import {resetScale} from './userImageScale.js';
+import {removeScaleListeners, addScaleListeners} from './user-image-scale.js';
+import {pristine} from './form-validation.js';
+import {resetFilters} from './user-image-filters.js';
+import {resetScale} from './user-image-scale.js';
 
 
 const body = document.body;

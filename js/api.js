@@ -103,17 +103,17 @@ const getUserPictures = () =>
     });
 
 
-const sendFormData = (body) => fetch(
+const sendFormData = (formData) => fetch(
   'https://32.javascript.htmlacademy.pro/kekstagram',
   {
     method: 'POST',
-    body,
+    body: formData,
   })
   .then((response) => {
     if (!response.ok) {
       throw new Error();
     }
+    return response.json();
   });
-
 
 export {getUserPictures, sendFormData, showError, showFormSuccessMessage, showFormErrorMessage};

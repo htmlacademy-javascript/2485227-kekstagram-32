@@ -1,7 +1,7 @@
 import { generateMiniatures } from './miniature.js';
-import { getPictures } from './main.js';
-import { generatePopup } from './bigImagePopup.js';
+import { generatePopup } from './big-image-popup.js';
 import {debounce} from './util.js';
+import {getUserPictures} from './api.js';
 
 const RERENDER_DELAY = 500;
 
@@ -9,6 +9,10 @@ const RANDOM_PICTURE_COUNT = 10;
 const filtersSection = document.querySelector('.img-filters');
 const filtersForm = document.querySelector('.img-filters__form');
 const filterButtons = document.querySelectorAll('.img-filters__button');
+
+const showFilters = function () {
+  filtersSection.classList.remove('img-filters--inactive');
+};
 
 const getRandomPictures = function (pictures) {
   const filteredPictures = pictures.slice();
@@ -41,10 +45,6 @@ const applyFilter = function (pictures, filterName) {
 };
 
 
-const showFilters = function() {
-  filtersSection.classList.remove('img-filters--inactive');
-};
-
 const debouncedApplyFilter = debounce(applyFilter, RERENDER_DELAY);
 
 const onFilterClick = function (evt) {
@@ -53,11 +53,12 @@ const onFilterClick = function (evt) {
   });
   evt.target.classList.add('img-filters__button--active');
   const filterName = evt.target.id;
-
-  debouncedApplyFilter(getPictures(), filterName);
+  getUserPictures().then((pictures) => {
+    debouncedApplyFilter(pictures, filterName);
+  });
 };
 
 filtersForm.addEventListener('click', onFilterClick);
 
 
-export {showFilters, applyFilter};
+export {showFilters};
