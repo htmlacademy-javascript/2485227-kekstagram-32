@@ -6,25 +6,19 @@ import './userImageScale.js';
 import './userImageFilters.js';
 import {getUserPictures, showError, showFormSuccessMessage, showFormErrorMessage} from './api.js';
 import {closeUserImagePopup} from './form.js';
-import './thumbnailsFilters.js';
+import {showFilters} from './thumbnailsFilters.js';
 
-let pictures = [];
+setUserFormSubmit(closeUserImagePopup, showFormSuccessMessage, showFormErrorMessage);
 
 getUserPictures()
 
-  .then((data) => {
-    pictures = data;
+  .then((pictures) => {
     generateMiniatures(pictures);
     generatePopup(pictures);
+    showFilters();
   })
   .catch(() => {
     showError();
   });
 
 
-setUserFormSubmit(closeUserImagePopup, showFormSuccessMessage, showFormErrorMessage);
-
-
-const getPictures = () => pictures;
-
-export { getPictures };
