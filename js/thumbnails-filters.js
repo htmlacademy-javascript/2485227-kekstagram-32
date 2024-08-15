@@ -1,5 +1,5 @@
 import { generateMiniatures } from './miniature.js';
-import { generatePopup } from './bigImagePopup.js';
+import { generatePopup } from './big-image-popup.js';
 import {debounce} from './util.js';
 import {getUserPictures} from './api.js';
 
