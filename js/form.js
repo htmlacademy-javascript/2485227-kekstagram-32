@@ -53,10 +53,10 @@ const onClosePopupButton = function (evt) {
 const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    if (!isFocused(hashtags) || !isFocused(comments)) {
-      closeUserImagePopup();
-    } else {
+    if (isFocused(hashtags) || isFocused(comments)) {
       evt.stopPropagation();
+    } else {
+      closeUserImagePopup();
     }
   }
 };

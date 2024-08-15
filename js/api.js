@@ -1,7 +1,8 @@
 import { isEscapeKey } from './util.js';
 import { onDocumentKeydown } from './form.js';
 const TIME_OUT = 5000;
-
+const postUrl = 'https://32.javascript.htmlacademy.pro/kekstagram/';
+const getUrl = 'https://32.javascript.htmlacademy.pro/kekstagram/data';
 const formSuccessMessageTemplate = document.querySelector('#success');
 const formErrorMessageTemplate = document.querySelector('#error');
 
@@ -91,7 +92,7 @@ const showError = function () {
 
 
 const getUserPictures = () =>
-  fetch('https://32.javascript.htmlacademy.pro/kekstagram/data')
+  fetch(getUrl)
     .then((response) => {
       if (!response.ok) {
         throw new Error();
@@ -104,7 +105,7 @@ const getUserPictures = () =>
 
 
 const sendFormData = (formData) => fetch(
-  'https://32.javascript.htmlacademy.pro/kekstagram',
+  postUrl,
   {
     method: 'POST',
     body: formData,
