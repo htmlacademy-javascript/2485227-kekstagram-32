@@ -113,7 +113,7 @@ const sendFormData = (formData) => fetch(
     if (!response.ok) {
       throw new Error();
     }
-    return response.json;
+    return response.json();
   });
 
 export {getUserPictures, sendFormData, showError, showFormSuccessMessage, showFormErrorMessage};
