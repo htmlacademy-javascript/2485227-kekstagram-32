@@ -45,19 +45,19 @@ const isFocused = function (element) {
   return document.activeElement === element;
 };
 
-const onClosePopupButton = function (evt) {
+function onClosePopupButton (evt) {
   evt.preventDefault();
   closeUserImagePopup();
-};
+}
 
-const onDocumentKeydown = (evt) => {
+function onDocumentKeydown (evt) {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    if (!isFocused(hashtags) || !isFocused(comments)) {
-      closeUserImagePopup();
-    } else {
+    if (isFocused(hashtags) || isFocused(comments)) {
       evt.stopPropagation();
+    } else {
+      closeUserImagePopup();
     }
   }
-};
+}
 export {closeUserImagePopup, onDocumentKeydown};

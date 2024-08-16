@@ -1,7 +1,8 @@
 import { isEscapeKey } from './util.js';
 import { onDocumentKeydown } from './form.js';
 const TIME_OUT = 5000;
-
+const postUrl = 'https://32.javascript.htmlacademy.pro/kekstagram/';
+const getUrl = 'https://32.javascript.htmlacademy.pro/kekstagram/data';
 const formSuccessMessageTemplate = document.querySelector('#success');
 const formErrorMessageTemplate = document.querySelector('#error');
 
@@ -23,23 +24,24 @@ const closeFormSuccessMessage = function () {
   document.removeEventListener('click', onSuccessOutsideClick);
 };
 
-const onSuccessOutsideClick = (evt) => {
+function onSuccessOutsideClick (evt) {
   const successMessage = document.querySelector('.success__inner');
   if (successMessage && !successMessage.contains(evt.target)) {
     closeFormSuccessMessage();
   }
-};
+}
 
-const onSuccessDocumentKeydown = (evt) => {
+function onSuccessDocumentKeydown (evt) {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     closeFormSuccessMessage();
   }
-};
-const onSuccessMessageButton = function (evt) {
+}
+
+function onSuccessMessageButton (evt) {
   evt.preventDefault();
   closeFormSuccessMessage();
-};
+}
 
 
 const showFormErrorMessage = function () {
@@ -60,23 +62,24 @@ const closeFormErrorMessage = function () {
   document.addEventListener('keydown', onDocumentKeydown);
 };
 
-const onErrorOutsideClick = (evt) => {
+function onErrorOutsideClick (evt) {
   const formErrorMessage = document.querySelector('.error__inner');
   if (formErrorMessage && !formErrorMessage.contains(evt.target)) {
     closeFormErrorMessage();
   }
-};
+}
 
-const onErrorDocumentKeydown = (evt) => {
+function onErrorDocumentKeydown (evt) {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     closeFormErrorMessage();
   }
-};
-const onFormErrorButton = function (evt) {
+}
+
+function onFormErrorButton (evt) {
   evt.preventDefault();
   closeFormErrorMessage();
-};
+}
 
 
 const showError = function () {
@@ -91,7 +94,7 @@ const showError = function () {
 
 
 const getUserPictures = () =>
-  fetch('https://32.javascript.htmlacademy.pro/kekstagram/data')
+  fetch(getUrl)
     .then((response) => {
       if (!response.ok) {
         throw new Error();
@@ -104,7 +107,7 @@ const getUserPictures = () =>
 
 
 const sendFormData = (formData) => fetch(
-  'https://32.javascript.htmlacademy.pro/kekstagram',
+  postUrl,
   {
     method: 'POST',
     body: formData,

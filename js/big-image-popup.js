@@ -107,19 +107,19 @@ const openPopup = (picture) => {
 
 };
 
-const onDocumentKeydown = (evt) => {
+function onDocumentKeydown (evt) {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     closePopup();
   }
-};
+}
 
-const onClosePopupButton = () => {
+function onClosePopupButton () {
   bigPictureCloseButton.addEventListener('click', (evt) => {
     evt.preventDefault();
     closePopup();
   });
-};
+}
 
 
 const generatePopup = (pictures) => {
