@@ -45,12 +45,12 @@ const isFocused = function (element) {
   return document.activeElement === element;
 };
 
-const onClosePopupButton = function (evt) {
+function onClosePopupButton (evt) {
   evt.preventDefault();
   closeUserImagePopup();
-};
+}
 
-const onDocumentKeydown = (evt) => {
+function onDocumentKeydown (evt) {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     if (isFocused(hashtags) || isFocused(comments)) {
@@ -59,5 +59,5 @@ const onDocumentKeydown = (evt) => {
       closeUserImagePopup();
     }
   }
-};
+}
 export {closeUserImagePopup, onDocumentKeydown};
